@@ -1,2 +1,6 @@
 class Album < ApplicationRecord
-end
+
+  # Validation: 
+  validates :title, presence: true
+
+end#Album
