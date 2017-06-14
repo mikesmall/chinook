@@ -34,7 +34,7 @@ class Track < ApplicationRecord
         errors.add(:name, 'must be capitalized.')
       end#if
     end#name_must_be_titleized
-  end#private
+  #end#private
 
   # Methods (called by Scopes):
   def self.shorter_than(milliseconds)
