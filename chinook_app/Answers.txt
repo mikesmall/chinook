@@ -88,6 +88,32 @@
 
 9. Find the least expensive track that has the genre "Electronica/Dance".
 
+  Genre.find_by(name: 'Electronica/Dance')
+
+        output:
+          Genre Load (0.5ms)  SELECT  "genres".* FROM "genres" WHERE "genres"."name" = $1 LIMIT $2  [["name", "Electronica/Dance"], ["LIMIT", 1]]
+          => #<Genre id: 15, name: "Electronica/Dance", created_at: "2008-05-25 12:13:42", updated_at: "2014-01-29 22:14:08">
+
+  Track.select(:name).where(genre_id: 15).order(:unit_price).last
+
+        output:
+          Track Load (2.5ms)  SELECT  "tracks"."name" FROM "tracks" WHERE "tracks"."genre_id" = $1 ORDER BY "tracks"."unit_price" DESC LIMIT $2  [["genre_id", 15], ["LIMIT", 1]]
+          => #<Track id: nil, name: "Instinto Colectivo">
+
 ----------------------------------------------------------------------------------
 
-10. Find all "MPEG autio file" tracks in the genre "Electronica/Dance".
+10. Find all "MPEG audio file" tracks in the genre "Electronica/Dance".
+
+
+  Track.select(:name).where(media_type_id: 1, genre_id: 15)
+
+        output:
+          Track Load (2.0ms)  SELECT  "tracks"."name" FROM "tracks" WHERE "tracks"."media_type_id" = $1 AND "tracks"."genre_id" = $2 LIMIT $3  [["media_type_id", 1], ["genre_id", 15], ["LIMIT", 11]]
+          => #<ActiveRecord::Relation [#<Track id: nil, name: "Instinto Colectivo">, #<Track id: nil, name: "Chapa o Coco">, #<Track id: nil, name: "Prostituta">, #<Track id: nil, name: "Eu So Queria Sumir">, #<Track id: nil, name: "Tres Reis">, #<Track id: nil, name: "Um Lugar ao Sol">, #<Track id: nil, name: "Batalha Naval">, #<Track id: nil, name: "O Misterio do Samba">, #<Track id: nil, name: "Armadura">, #<Track id: nil, name: "Na Ladeira">, ...]>
+
+          * I used .select(name) here and elsewhere just to make
+            the output more readable, by dispalying all other values
+            as a brief 'nil'.
+            Removing .select(name) will cause the output to display
+            the entirety of each track's relevant information
+            (warning: huge output).
