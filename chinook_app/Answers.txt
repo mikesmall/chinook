@@ -6,7 +6,7 @@
           Artist Load (0.7ms)  SELECT  "artists".* FROM "artists" WHERE "artists"."name" = $1 LIMIT $2  [["name", "Queen"], ["LIMIT", 1]]
           => #<Artist id: 51, name: "Queen", created_at: "2006-01-08 22:57:01", updated_at: "2014-01-29 22:10:22">
 
-  Album.select(:title).where('artist_id = ?', 51)
+  Album.select(:title).where('artist_id = ?', '51')
 
         output:
           Album Load (1.1ms)  SELECT  "albums"."title" FROM "albums" WHERE (artist_id = 51) LIMIT $1  [["LIMIT", 11]]
@@ -46,7 +46,11 @@
 
 5. Find the total amount of time required to listen to all the tracks in the database.
 
-  
+  Track.sum("milliseconds")
+
+        output:
+          (7.4ms)  SELECT SUM("tracks"."milliseconds") FROM "tracks"
+          => 1378575827
 
 ----------------------------------------------------------------------------------
 
