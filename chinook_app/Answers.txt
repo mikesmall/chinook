@@ -26,6 +26,12 @@
 
 3. Find the genre with the name "Hip Hop/Rap".
 
+  Genre.find_by(name: 'Hip Hop/Rap')
+
+        output:
+        Genre Load (0.6ms)  SELECT  "genres".* FROM "genres" WHERE "genres"."name" = $1 LIMIT $2  [["name", "Hip Hop/Rap"], ["LIMIT", 1]]
+        => #<Genre id: 17, name: "Hip Hop/Rap", created_at: "2013-01-20 02:04:31", updated_at: "2014-01-29 22:14:08">
+
 ----------------------------------------------------------------------------------
 
 4. Count how many tracks belong to the "Hip Hop/Rap" genre
